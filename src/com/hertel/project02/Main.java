@@ -48,7 +48,7 @@ public class Main {
         System.out.println("(1) Add a to-do item.");
         System.out.println("(2) Remove a to-do item.");
         System.out.println("(3) Edit a to-do item.");
-        System.out.println("(4) List all items.");
+        System.out.println("(4) List items.");
         System.out.println("(0) Exit.");
     }
 
@@ -116,10 +116,24 @@ public class Main {
     }
 
     static void listItems() {
+        int priority = userInput.promptInt("What item priority (1-5) do you want to list (0 for all): ");
         int itemNum = 1;
-        for (int i=1; i<6; i++) {
+        if (priority == 0){
+            for (int i = 1; i < 6; i++) {
+                for (Item item : toDo) {
+                    if (item.getPriority() == i) {
+                        System.out.println(itemNum + ". " + item.getTitle());
+                        System.out.println("   Description: " + item.getDescription());
+                        System.out.println("   Priority: " + item.getPriority());
+
+                        itemNum++;
+                    }
+                }
+            }
+        }
+        else if (priority>0 && priority<6){
             for (Item item : toDo) {
-                if (item.getPriority() == i) {
+                if (item.getPriority() == priority) {
                     System.out.println(itemNum + ". " + item.getTitle());
                     System.out.println("   Description: " + item.getDescription());
                     System.out.println("   Priority: " + item.getPriority());
@@ -127,6 +141,9 @@ public class Main {
                     itemNum++;
                 }
             }
+        }
+        else{
+            System.out.println(priority + " is not a valid priority.");
         }
     }
 
